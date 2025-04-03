@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png" type="image/x-icon">
+
+    <title> - IN FOUR </title>
+
+    <style>
+        :root {
+            --primary: #ae2828;
+            --secondary: #030912;
+            --accent: #ff4d4d;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+
+        .parrafo11 {
+            font-size: 20px;
+            text-align: justify;
+            padding-bottom: 60px;
+            padding-top: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:'Courier New', Courier, monospace;
+
+        }
+
+        body {
+            background-color: #00020a;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Mejorado */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: rgb(217, 204, 204);
+            padding: 2rem 0rem;
+            box-shadow: 0 4px 15px rgba(4, 0, 0, 0.861);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: rgb(242, 230, 230);
+            display: flex;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgb(18, 9, 9);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo span {
+            color: var(--accent);
+            margin-left: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.8rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: rgb(241, 233, 233);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 6rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Sección de Videos - Modificada */
+        .videos-section {
+            margin-bottom: 10rem;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 3.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.1rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.53);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.538);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgb(242, 237, 237);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.906);
+        }
+
+        .video-card:hover .video-play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-info {
+            padding: 2rem;
+        }
+
+        .video-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            color: var(--dark);
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 1em;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #181717;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Upload Section */
+        .upload-container {
+            background: rgb(10, 10, 10);
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(243, 237, 237, 0.913);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .upload-title {
+            font-size: 2rem;    
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .upload-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--light);
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(26, 115, 232, 0.05);
+        }
+
+        .upload-area.active {
+            border-color: var(--accent);
+            background-color: rgba(26, 115, 232, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-area:hover .upload-icon {
+            transform: translateY(-5px);
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .upload-subtext {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .file-info.show {
+            display: block;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress.show {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .upload-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            min-width: 180px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: rgb(107, 101, 101);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: rgba(216, 210, 210, 0.962);
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgb(0, 0, 0);
+            margin-top: 3rem;
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+
+        .contact-methods {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .contact-list li {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-list a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .contact-list a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgb(249, 249, 249);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(247, 244, 244, 0.923);
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .upload-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .contact-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header Mejorado -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">X - IN FOUR <span>DD</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#videos">Videos</a></li>
+                    <li><a href="#upload">Subir</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Sección de Videos (ahora arriba) -->
+        <section class="videos-section" id="videos">
+            <P class="parrafo11">Web hosteada en mi PC (puerto 80) para los script kiddies que se bajan las páginas pensando que mis webs son del Ministerio de Cultura. Zzzz…
+
+                Les dejo esta web para demostrar mis habilidades aprendidas en el instituto (puro YouTube, mi profe solo llegaba a jatear JAJA).
+                
+                Mi CPU aguanta como puede con el puerto 80 abierto. Así que pásenle, chévere nomás… antes de que todo se caiga más rápido que tu relación.</P>
+            <h2 class="section-title">Videos Destacados</h2>
+            <div class="videos-grid">
+                <!-- Video Card 1 -->
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="01.png" alt="Video thumbnail">
+                        <div class="video-play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Mi primer video XD</h3>
+                        <div class="video-meta">
+                            <span>Beba Good</span>
+                            <span>206 vistas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="nrr.png" alt="Video thumbnail">
+                        <div class="video-play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Somos libres?</h3>
+                        <div class="video-meta">
+                            <span>Alan Gracia Perez</span>
+                            <span>3.5K vistas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="video-card" onclick="luisga()">
+                    <div class="video-thumbnail">
+                        <img src="02.png" alt="Video thumbnail">
+                        <div class="video-play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Jugando al roblox a las 3 am sale mal xddd</h3>
+                        <div class="video-meta">
+                            <span>En decadencia</span>
+                            <span>5.7K vistas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="04.png" alt="Video thumbnail">
+                        <div class="video-play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Pendejo no dura nada</h3>
+                        <div class="video-meta">
+                            <span>Dina Boluarte</span>
+                            <span>10.2K vistas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 5 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="nr.png" alt="Video thumbnail">
+                        <div class="video-play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Subir .mp4</h3>
+                        <div class="video-meta"
+                            <span>---</span>
+                            <span>0.0K vistas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 6 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="nr.png" alt="Video thumbnail">
+                        <div class="video-play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Subir .mp4</h3>
+                        <div class="video-meta">
+                            <span>---</span>
+                            <span>0.0K vistas</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-container" id="upload">
+            <h2 class="upload-title">Cargar Video</h2>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <p class="upload-text">Arrastra y suelta tus videos aquí</p>
+                <p class="upload-subtext">o haz clic para seleccionar archivos</p>
+                <input type="file" id="fileInput" accept="video/*" style="display: none;">
+                <div class="file-info" id="fileInfo"></div>
+                <div class="upload-progress" id="uploadProgress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+            <div class="upload-actions">
+                <button class="btn btn-outline" id="selectFilesBtn"><i class="fas fa-folder-open"></i> Seleccionar
+                    archivos</button>
+                <button class="btn" id="uploadBtn" disabled><i class="fas fa-upload"></i> Subir ahora</button>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <h2 class="contact-title">Contacto</h2>
+            <div class="contact-content">
+                <div class="contact-methods">
+                    <h3>Contáctanos directamente</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <a href="https://t.me/tucanal" target="_blank">
+                                <span class="contact-icon"><i class="fab fa-telegram"></i></span>
+                                <span>Telegram: @CtrlAltDeletee</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://luisckz.github.io/lss/pg.html" target="_blank">
+                                <span class="contact-icon"><i class="fab fa-whatsapp"></i></span>
+                                <span>WhatsApp: 99885259¿?</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <h3>Envíanos un mensaje</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn submit-btn">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#.">Videos</a>
+                <a href="#.">Subir</a>
+                <a href="#.">Contacto</a>
+                <a href="#.">Términos</a>
+                <a href="#.">Privacidad</a>
+            </div>
+            <div class="social-icons">
+                <a target="_blank" href="https://t.me/CtrlAltDeleteCcx"><i class="fab fa-telegram"></i></a>
+                <a target="_blank" href="https://t.me/CtrlAltDeleteCcx"><i class="fab fa-whatsapp"></i></a>
+                <a target="_blank" href="https://t.me/CtrlAltDeleteCcx"><i class="fab fa-instagram"></i></a>
+                <a target="_blank" href="https://t.me/CtrlAltDeleteCcx"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="copyright">© 2025 X - SSD. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Elementos del DOM para la carga de videos
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const selectFilesBtn = document.getElementById('selectFilesBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInfo = document.getElementById('fileInfo');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressBar = document.getElementById('progressBar');
+
+        function luisga() {
+            alert ("Error.nrgrok server")
+        }
+        // Variables para el archivo seleccionado
+        let selectedFile = null;
+
+        // Event listeners para la carga de videos
+        selectFilesBtn.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', handleFileSelect);
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('active');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('active');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('active');
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect({ target: fileInput });
+            }
+        });
+
+        uploadBtn.addEventListener('click', uploadFile);
+
+        // Manejar selección de archivo
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Validar tipo de archivo
+            if (!file.type.startsWith('video/')) {
+                alert('Por favor selecciona un archivo de video válido.');
+                return;
+            }
+
+            selectedFile = file;
+
+            // Mostrar información del archivo
+            fileInfo.innerHTML = `
+                <p><strong>Nombre:</strong> ${file.name}</p>
+                <p><strong>Tamaño:</strong> ${formatFileSize(file.size)}</p>
+                <p><strong>Tipo:</strong> ${file.type}</p>
+            `;
+            fileInfo.classList.add('show');
+
+            // Habilitar botón de subir
+            uploadBtn.disabled = false;
+        }
+
+        // Subir archivo (simulación)
+        function uploadFile() {
+            if (!selectedFile) return;
+
+            // Mostrar barra de progreso
+            uploadProgress.classList.add('show');
+            uploadBtn.disabled = true;
+
+            // Simular progreso de subida
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        alert('¡Video subido con éxito!');
+                        resetUploader();
+                    }, 500);
+                }
+            }, 300);
+        }
+
+        // Resetear el uploader
+        function resetUploader() {
+            selectedFile = null;
+            fileInput.value = '';
+            fileInfo.classList.remove('show');
+            fileInfo.innerHTML = '';
+            uploadProgress.classList.remove('show');
+            progressBar.style.width = '0';
+            uploadBtn.disabled = true;
+        }
+
+        // Formatear tamaño de archivo
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Manejar el formulario de contacto
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Tu mensaje se ha enviado, no sé a donde pero se ha enviado JAJA');
+            contactForm.reset();
+        });
+    </script>
+</body>
+
+</html>
